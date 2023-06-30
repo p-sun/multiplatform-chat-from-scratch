@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import {
   IMessage,
   Message,
@@ -22,8 +23,13 @@ export async function createNewMessage(msg: IMessage) {
   await newMessage.save();
 }
 
-export async function getAllMessages() {
-  return await Message.find();
+export async function getMessagesFromConvo(
+  convoId: Types.ObjectId | string | undefined
+) {
+  if (!convoId) {
+    throw new Error('Must query messages using `convoId` param.');
+  }
+  return await Message.find().byConversationId(new Types.ObjectId(convoId));
 }
 
 export async function createNewUser(user: IUser) {

@@ -49,10 +49,19 @@ export interface IMessage {
   contents: String;
   createdAt: number;
 }
-const messageSchema = new Schema({
-  conversation: { type: Types.ObjectId, required: true },
-  from: { type: Types.ObjectId, required: true },
-  contents: { type: String, required: true },
-  createdAt: { type: Number, required: true },
-});
+const messageSchema = new Schema(
+  {
+    conversation: { type: Types.ObjectId, required: true },
+    from: { type: Types.ObjectId, required: true },
+    contents: { type: String, required: true },
+    createdAt: { type: Number, required: true },
+  },
+  {
+    query: {
+      byConversationId(convoId: Types.ObjectId) {
+        return this.find({ conversation: convoId });
+      },
+    },
+  }
+);
 export const Message = model('Message', messageSchema);

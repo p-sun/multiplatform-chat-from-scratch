@@ -4,7 +4,7 @@ import {
   createNewMessage,
   createNewUser,
   findFirstUserByEmail,
-  getAllMessages,
+  getMessagesFromConvo,
   getMainConvo,
 } from './queries';
 
@@ -23,11 +23,11 @@ export async function connectDB(
 async function hydrateDatabase() {
   const now = Date.now();
 
-  const convoTitle = 'The Golden Trio';
+  const convoTitle = 'The Golden Trio333';
   const convo =
     (await getMainConvo(convoTitle)) ??
     (await createNewConvo({
-      title: 'The Golden Trio',
+      title: 'The Golden Trio333',
     }));
 
   const [harry, hermione, ron] = await Promise.all([
@@ -54,7 +54,7 @@ async function hydrateDatabase() {
       })),
   ]);
 
-  const messages = await getAllMessages();
+  const messages = await getMessagesFromConvo(convo._id);
   if (messages.length == 0) {
     createNewMessage({
       from: hermione._id,

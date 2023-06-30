@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import { getAllMessages } from './src/database/queries';
+import { getMessagesFromConvo } from './src/database/queries';
 import { connectDB } from './src/database/setupDB';
 
 const PORT = 8000;
@@ -18,9 +18,16 @@ app.get('/', (req, res) => {
 });
 
 app.get('/messages', (req, res) => {
-  getAllMessages().then((msgs) => {
-    res.send({ messages: msgs });
-  });
+  console.log('request convoId', req.query.convoId);
+  getMessagesFromConvo(
+    req.query.convoId ? String(req.query.convoId) : undefined
+  )
+    .then((msgs) => {
+      res.send({ messages: msgs });
+    })
+    .catch((error) => {
+      res.json({ error: error.message });
+    });
 });
 
 app.listen(PORT, () => {
