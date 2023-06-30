@@ -42,6 +42,7 @@ export function Conversation(props: { messages: string[] }) {
 
   return (
     <div className='messages-list' ref={messagesContainer}>
+      <br />
       {msgsViews}
     </div>
   );

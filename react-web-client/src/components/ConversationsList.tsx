@@ -33,7 +33,7 @@ export function ConversationsList(props: { messages: string[] }) {
   };
 
   const msgsViews: React.ReactElement[] = [];
-  for (let i = 0; i < messages.length; i++)
+  for (let i = 0; i < messages.length; i++) {
     msgsViews.push(
       <ConversationSummary
         key={Math.random() * 100000}
@@ -43,6 +43,7 @@ export function ConversationsList(props: { messages: string[] }) {
         onclick={() => handleClick(i)}
       />
     );
+  }
 
   return (
     <div className='conversation-summary-list' ref={container}>

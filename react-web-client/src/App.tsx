@@ -5,7 +5,7 @@ import { ConvoInput } from './components/InputContainer';
 import { ConversationsList } from './components/ConversationsList';
 
 function App() {
-  const [msgs, setMessages] = useState(Array.from({ length: 20 }).map((val, i) => String(i)));
+  const [msgs, setMessages] = useState(Array.from({ length: 30 }).map((val, i) => String(i)));
   const onSubmit = (text: string) => {
     setMessages((prevMsgs) => prevMsgs.concat(text));
   };
