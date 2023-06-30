@@ -1,4 +1,3 @@
-import { connect, Types } from 'mongoose';
 import {
   IMessage,
   Message,
@@ -7,19 +6,6 @@ import {
   IConversation,
   Conversation,
 } from '../models/schemas';
-import { hydrateDatabase } from './hydrateDB';
-
-async function connectDB(
-  dbUser: String,
-  dbPassword: String,
-  dbDatabase: string
-) {
-  const uri = `mongodb+srv://${dbUser}:${dbPassword}@multiplatformchat.${dbDatabase}.mongodb.net/?retryWrites=true&w=majority`;
-  await connect(uri);
-  console.log(`You're successfully connected to MongoDB!!`);
-  await hydrateDatabase();
-  console.log('Database hydration complete.');
-}
 
 export async function createNewConvo(convo: IConversation) {
   const newConvo = new Conversation(convo);
@@ -50,5 +36,3 @@ export async function createNewUser(user: IUser) {
 export async function findFirstUserByEmail(email: string) {
   return (await User.findOne().where('name').gt(10).byEmail(email)).at(0);
 }
-
-export { connectDB };

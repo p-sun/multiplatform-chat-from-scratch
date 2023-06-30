@@ -1,3 +1,4 @@
+import { connect } from 'mongoose';
 import {
   createNewConvo,
   createNewMessage,
@@ -5,9 +6,21 @@ import {
   findFirstUserByEmail,
   getAllMessages,
   getMainConvo,
-} from './database';
+} from './queries';
 
-export async function hydrateDatabase() {
+export async function connectDB(
+  dbUser: String,
+  dbPassword: String,
+  dbDatabase: string
+) {
+  const uri = `mongodb+srv://${dbUser}:${dbPassword}@multiplatformchat.${dbDatabase}.mongodb.net/?retryWrites=true&w=majority`;
+  await connect(uri);
+  console.log(`You're successfully connected to MongoDB!!`);
+  await hydrateDatabase();
+  console.log('Database hydration complete.');
+}
+
+async function hydrateDatabase() {
   const now = Date.now();
 
   const convoTitle = 'The Golden Trio';
@@ -77,7 +90,7 @@ export async function hydrateDatabase() {
       from: hermione._id,
       conversation: convo._id,
       createdAt: now + 80,
-      contents: `Just because you've got the emotional range of a teaspoon doesn't mean we all have`,
+      contents: `Just because you've got the emotional range of a teaspoon`,
     });
   }
 

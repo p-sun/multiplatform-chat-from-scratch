@@ -1,8 +1,8 @@
-import express, { Express, Request, Response } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
-import { connectDB, getAllMessages } from './src/database/database';
-import bodyParser = require('body-parser');
-import { Message } from './src/models/schemas';
+import bodyParser from 'body-parser';
+import { getAllMessages } from './src/database/queries';
+import { connectDB } from './src/database/setupDB';
 
 const PORT = 8000;
 

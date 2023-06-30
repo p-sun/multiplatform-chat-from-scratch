@@ -52,7 +52,6 @@ export interface IMessage {
 const messageSchema = new Schema({
   conversation: { type: Types.ObjectId, required: true },
   from: { type: Types.ObjectId, required: true },
-  timestamp: Number,
   contents: { type: String, required: true },
   createdAt: { type: Number, required: true },
 });
