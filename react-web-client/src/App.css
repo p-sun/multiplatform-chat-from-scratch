@@ -8,18 +8,26 @@ body {
   --wash: #e4e6eb;
 }
 
-.conversation-panel {
-  margin: 18px;
+.main-container {
+  display: flex;
+}
+
+.left-panel {
+  width: 460px;
+}
+
+.right-panel {
+  margin: 8px 10px;
+  width: 100vh;
 }
 
 .messages-list {
-  flex: auto;
   display: flex;
   flex-direction: column;
   row-gap: 12px;
   font-size: 15px;
   overflow-y: scroll;
-  height: 100vh;
+  height: calc(100vh - 64px);
 }
 
 .chat-bubble-hstack {
@@ -63,4 +71,30 @@ body {
   width: 98%;
   outline: none;
   background-color: transparent;
+}
+
+.conversation-summary-list {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: calc(100vh);
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.conversation-summary {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.conversation-summary-list .title {
+  font-weight: 600;
+}
+
+.conversation-summary-list .subtitle {
+  font-size: 13px;
+}
+
+.conversation-summary-list .selected {
+  background: rgba(0, 0, 0, 0.04);
 }
