@@ -4,15 +4,15 @@ function ConversationSummary(props: {
   title: string;
   subtitle: string;
   isSelected: boolean;
-  onclick: () => void;
+  onClick: () => void;
 }) {
-  const { title, subtitle, isSelected, onclick } = props;
+  const { title, subtitle, isSelected, onClick } = props;
 
   return (
-    <div className={'conversation-summary ' + (isSelected ? 'selected' : '')} onClick={onclick}>
-      <text className='title'>{title}</text>
+    <div className={'conversation-summary ' + (isSelected ? 'selected' : '')} onClick={onClick}>
+      <div className='title'>{title}</div>
       <br />
-      <text className='subtitle'>{subtitle}</text>
+      <div className='subtitle'>{subtitle}</div>
     </div>
   );
 }
@@ -40,7 +40,7 @@ export function ConversationsList(props: { messages: string[] }) {
         title={messages[i]}
         subtitle={messages[i]}
         isSelected={selected === i}
-        onclick={() => handleClick(i)}
+        onClick={() => handleClick(i)}
       />
     );
   }

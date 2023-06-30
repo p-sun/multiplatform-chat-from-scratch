@@ -41,17 +41,17 @@ body {
   max-width: 300px;
 }
 
-.chat-bubble-non-self {
+.chat-bubble.non-self {
   background: var(--wash);
   color: var(--primary-text);
 }
 
-.chat-bubble-self {
+.chat-bubble.self {
   background: rgb(0, 132, 255);
   color: white;
 }
 
-.chat-bubble-spacer {
+.chat-bubble-hstack .bubble-spacer {
   flex-grow: 1;
 }
 
