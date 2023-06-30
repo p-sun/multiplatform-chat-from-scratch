@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 app.get('/messages', (req, res) => {
   console.log('request convoId', req.query.convoId);
   getMessagesFromConvo(
-    req.query.convoId ? String(req.query.convoId) : undefined
+    typeof req.query.convoId === 'string' ? req.query.convoId : undefined
   )
     .then((msgs) => {
       res.send({ messages: msgs });
