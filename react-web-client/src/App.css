@@ -1,37 +1,44 @@
-.App {
+body {
+  font-family: 'system-ui', '.SFNSText-Regular', sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+:root {
+  --primary-text: #050505;
+  --wash: #e4e6eb;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.messages-list {
+  flex: auto;
   display: flex;
   flex-direction: column;
-  font-size: calc(10px + 2vmin);
+  row-gap: 12px;
+  font-size: 15px;
+  margin: 18px;
+}
+
+.chat-bubble-hstack {
+  display: flex;
+}
+
+.chat-bubble {
+  padding-right: 12px;
+  padding-left: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 18px;
+  max-width: 300px;
+}
+
+.chat-bubble-non-self {
+  background: var(--wash);
+  color: var(--primary-text);
+}
+
+.chat-bubble-self {
+  background: rgb(0, 132, 255);
   color: white;
-  padding: 24px;
-  text-align: left;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.chat-bubble-spacer {
+  flex-grow: 1;
 }
