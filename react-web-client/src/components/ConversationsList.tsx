@@ -26,7 +26,7 @@ export function ConversationsList(props: { messages: string[] }) {
     if (container.current) {
       container.current.scrollTop = 0;
     }
-  });
+  }, [messages]);
 
   const handleClick = (val: number) => {
     setSelected(val);
@@ -46,7 +46,7 @@ export function ConversationsList(props: { messages: string[] }) {
 
   return (
     <div className='conversation-summary-list' ref={container}>
-      <br></br>
+      <br />
       {msgsViews}
     </div>
   );
