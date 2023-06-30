@@ -1,5 +1,6 @@
 body {
   font-family: 'system-ui', '.SFNSText-Regular', sans-serif;
+  overflow: hidden;
 }
 
 :root {
@@ -17,6 +18,8 @@ body {
   flex-direction: column;
   row-gap: 12px;
   font-size: 15px;
+  overflow-y: scroll;
+  height: 100vh;
 }
 
 .chat-bubble-hstack {
@@ -44,13 +47,7 @@ body {
 }
 
 .conversation-input {
-  background-color: white;
   color: rgb(28, 30, 33);
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-right: 18px;
-  position: fixed;
-  bottom: 0px;
   width: -webkit-fill-available;
 }
 
