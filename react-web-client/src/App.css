@@ -7,13 +7,16 @@ body {
   --wash: #e4e6eb;
 }
 
+.conversation-panel {
+  margin: 18px;
+}
+
 .messages-list {
   flex: auto;
   display: flex;
   flex-direction: column;
   row-gap: 12px;
   font-size: 15px;
-  margin: 18px;
 }
 
 .chat-bubble-hstack {
@@ -21,10 +24,7 @@ body {
 }
 
 .chat-bubble {
-  padding-right: 12px;
-  padding-left: 12px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding: 8px 12px;
   border-radius: 18px;
   max-width: 300px;
 }
@@ -41,4 +41,29 @@ body {
 
 .chat-bubble-spacer {
   flex-grow: 1;
+}
+
+.conversation-input {
+  background-color: white;
+  color: rgb(28, 30, 33);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 18px;
+  position: fixed;
+  bottom: 0px;
+  width: -webkit-fill-available;
+}
+
+.conversation-input .bubble {
+  border-radius: 20px;
+  background-color: rgba(134, 142, 153, 0.1);
+  padding: 8px 10px;
+}
+
+.conversation-input .text-input {
+  line-height: 20.1px;
+  border-width: 0px;
+  width: 98%;
+  outline: none;
+  background-color: transparent;
 }

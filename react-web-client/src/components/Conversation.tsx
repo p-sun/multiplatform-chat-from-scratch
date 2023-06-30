@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 function ChatBubble(props: { message: string; isSelf: boolean }) {
   const { message, isSelf } = props;
 
@@ -23,10 +25,15 @@ function ChatBubble(props: { message: string; isSelf: boolean }) {
 
 export function Conversation(props: { messages: string[] }) {
   const { messages } = props;
+  const lastSpacer = useRef(null as HTMLBRElement | null);
   const msgsViews: React.ReactElement[] = [];
 
   for (const msg of messages) {
-    msgsViews.push(<ChatBubble message={msg} isSelf={Math.random() > 0.5} />);
+    msgsViews.push(
+      <ChatBubble key={Math.random() * 100000} message={msg} isSelf={Math.random() > 0.5} />
+    );
   }
+  msgsViews.push(<br key='spacer' ref={lastSpacer} />);
+  lastSpacer.current?.scrollIntoView();
   return <div className='messages-list'>{msgsViews}</div>;
 }

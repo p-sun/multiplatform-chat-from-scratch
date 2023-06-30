@@ -1,11 +1,18 @@
+import { useState } from 'react';
 import './App.css';
 import { Conversation } from './components/Conversation';
+import { ConvoInput } from './components/InputContainer';
 
 function App() {
-  const msgs = Array.from({ length: 10 }).map((val, i) => String(i));
+  const [msgs, setMessages] = useState(Array.from({ length: 10 }).map((val, i) => String(i)));
+  const onSubmit = (text: string) => {
+    setMessages((prevMsgs) => prevMsgs.concat(text));
+  };
   return (
-    <div className='todo-app'>
+    <div className='conversation-panel'>
       <Conversation messages={msgs} />
+      <br />
+      <ConvoInput onSubmit={onSubmit} />
     </div>
   );
 }
