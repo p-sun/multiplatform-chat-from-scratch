@@ -1,8 +1,9 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import { getMessagesFromConvo } from './src/database/queries';
-import { connectDB } from './src/database/setupDB';
+import { getMessagesFromConvo } from './src/network/queries';
+import { connectDB } from './src/network/setupDB';
+import { createServerIO } from './src/network/createServerIO';
 
 const PORT = 8000;
 
@@ -12,6 +13,8 @@ const env = process.env;
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+const io = createServerIO(app);
 
 app.get('/', (req, res) => {
   res.send('Express + TypeScript Server');
@@ -24,6 +27,7 @@ app.get('/messages', (req, res) => {
   )
     .then((msgs) => {
       res.send({ messages: msgs });
+      io.emit('message', req.body);
     })
     .catch((error) => {
       res.json({ error: error.message });
