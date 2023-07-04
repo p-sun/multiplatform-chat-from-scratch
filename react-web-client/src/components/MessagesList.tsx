@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react';
+import { Message, User } from '../models/models';
 
-function ChatBubble(props: { message: string; isSelf: boolean }) {
+function ChatBubble(props: { message: Message; isSelf: boolean }) {
   const { message, isSelf } = props;
 
   const Spacer = <div className='bubble-spacer' />;
 
   const MessageBubble = (
-    <div key={message} className={'chat-bubble ' + (isSelf ? 'self' : 'non-self')}>
-      This is a message This is a message This is a message This is a message This is a message:{' '}
-      {message}
+    <div key={message._id} className={'chat-bubble ' + (isSelf ? 'self' : 'non-self')}>
+      {message.contents}
     </div>
   );
 
@@ -20,8 +20,8 @@ function ChatBubble(props: { message: string; isSelf: boolean }) {
   );
 }
 
-export function Conversation(props: { messages: string[] }) {
-  const { messages } = props;
+export function MessagesList(props: { messages: Message[]; user: User }) {
+  const { messages, user } = props;
   const messagesContainer = useRef(null as HTMLDivElement | null);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export function Conversation(props: { messages: string[] }) {
   });
 
   const msgsViews = messages.map((msg) => (
-    <ChatBubble key={Math.random() * 100000} message={msg} isSelf={Math.random() > 0.5} />
+    <ChatBubble key={msg._id} message={msg} isSelf={user._id === msg.from} />
   ));
 
   return (

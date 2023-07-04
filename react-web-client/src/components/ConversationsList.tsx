@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Conversation } from '../models/models';
 
 function ConversationSummary(props: {
   title: string;
@@ -17,8 +18,8 @@ function ConversationSummary(props: {
   );
 }
 
-export function ConversationsList(props: { messages: string[] }) {
-  const { messages } = props;
+export function ConversationsList(props: { convos: Conversation[] }) {
+  const { convos } = props;
   const container = useRef(null as HTMLDivElement | null);
   const [selected, setSelected] = useState(0);
 
@@ -26,19 +27,19 @@ export function ConversationsList(props: { messages: string[] }) {
     if (container.current) {
       container.current.scrollTop = 0;
     }
-  }, [messages]);
+  }, [convos]);
 
   const handleClick = (val: number) => {
     setSelected(val);
   };
 
   const msgsViews: React.ReactElement[] = [];
-  for (let i = 0; i < messages.length; i++) {
+  for (let i = 0; i < convos.length; i++) {
     msgsViews.push(
       <ConversationSummary
         key={Math.random() * 100000}
-        title={messages[i]}
-        subtitle={messages[i]}
+        title={convos[i].title}
+        subtitle={`${convos[i].updatedAt}`}
         isSelected={selected === i}
         onClick={() => handleClick(i)}
       />
