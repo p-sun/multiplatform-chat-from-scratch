@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react';
 import { MessagesList } from './components/MessagesList';
 import { ConvoInput } from './components/InputContainer';
 import { ConversationsList } from './components/ConversationsList';
-import { createClientIO } from './network/createClientIO';
 import { ChatManager } from './managers/ChatManager';
 import { Conversation, Message, User } from './models/models';
 
@@ -42,8 +41,6 @@ function useChatManager() {
   };
 
   useEffect(() => {
-    createClientIO();
-
     chatManager.current.fetchMessages(mainConvo).then((msgs) => {
       setMessages(msgs);
     });

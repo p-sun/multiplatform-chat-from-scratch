@@ -1,11 +1,18 @@
 import { Conversation, Message, User } from '../models/models';
+import { SocketClient } from './SocketClient';
 
 export class ChatManager {
   private _serverMessages: Message[] = [];
-  private _newMessages: Message[] = []; // Preemtively display new messages before they are saved into the server
+  private _newMessages: Message[] = []; // Preemtively display new messages before we fetch them from the server
+  private _socketClient = new SocketClient();
+
+  constructor() {
+    this._socketClient.onMessage = (msg) => {
+      // this._newMessages.push(msg);
+    };
+  }
 
   public getMessages(): Message[] {
-    console.log('getMessages()', this._serverMessages, this._newMessages);
     return this._serverMessages.concat(this._newMessages);
   }
 
