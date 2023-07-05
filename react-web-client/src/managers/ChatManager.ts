@@ -15,7 +15,7 @@ export class ChatManager {
   }
 
   public getMessages(): Message[] {
-    return this._serverMessages.concat(this._newMessages);
+    return this._serverMessages.concat(this._newMessages).sort((a, b) => a.createdAt - b.createdAt);
   }
 
   public async fetchMessages(convo: Conversation): Promise<Message[]> {
@@ -28,7 +28,7 @@ export class ChatManager {
       redirect: 'follow',
     }).then((res) => res.json());
     this._serverMessages = json.messages as Message[];
-    return this._serverMessages;
+    return this._serverMessages.sort((a, b) => a.createdAt - b.createdAt);
   }
 
   public async sendMessage(c: { from: User; conversation: Conversation; contents: string }) {
@@ -71,6 +71,7 @@ export class ChatManager {
   private pushNewServerMessage(msg: Message) {
     if (!this._serverMessages.find((oldM) => oldM._id === msg._id)) {
       this._serverMessages.push(msg);
+      this._serverMessages.sort((a, b) => a.createdAt - b.createdAt);
     }
     this.onChange(this.getMessages());
   }

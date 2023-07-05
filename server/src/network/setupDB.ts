@@ -23,11 +23,11 @@ export async function connectDB(
 async function hydrateDatabase() {
   const now = Date.now();
 
-  const convoTitle = 'The Golden Trio333';
+  const convoTitle = 'The Golden Trio';
   const convo =
     (await getMainConvo(convoTitle)) ??
     (await createNewConvo({
-      title: 'The Golden Trio333',
+      title: 'The Golden Trio',
     }));
 
   const [harry, hermione, ron] = await Promise.all([
@@ -71,14 +71,32 @@ async function hydrateDatabase() {
     createNewMessage({
       from: ron._id,
       conversation: convo._id,
-      createdAt: now + 40,
+      createdAt: now + 42,
       contents: `No`,
     });
     createNewMessage({
       from: hermione._id,
       conversation: convo._id,
       createdAt: now + 60,
-      contents: `Well, obviously, she's feeling very sad, because of Cedric dying. Then I expect she's feeling confused because she liked Cedric and now she likes Harry, and she can't work out who she likes best. Then she'll be feeling guilty, thinking it's an insult to Cedric's memory to be kissing Harry at all, and she'll be worrying about what everyone else might say about her if she starts going out with Harry. And she probably can't work out what her feelings toward Harry are anyway, because he was the one who was with Cedric when Cedric died, so that's all very mixed up and painful. Oh, and she's afraid she's going to be thrown off the Ravenclaw Quidditch team because she's been flying so badly.`,
+      contents: `Well, obviously, she's feeling very sad, because of Cedric dying.`,
+    });
+    createNewMessage({
+      from: hermione._id,
+      conversation: convo._id,
+      createdAt: now + 62,
+      contents: `Then I expect she's feeling confused because she liked Cedric and now she likes Harry,`,
+    });
+    createNewMessage({
+      from: hermione._id,
+      conversation: convo._id,
+      createdAt: now + 64,
+      contents: `and she can't work out who she likes best.`,
+    });
+    createNewMessage({
+      from: hermione._id,
+      conversation: convo._id,
+      createdAt: now + 66,
+      contents: `Then she'll be feeling guilty, thinking it's an insult to Cedric's memory to be kissing Harry at all, and she'll be worrying about what everyone else might say about her if she starts going out with Harry. And she probably can't work out what her feelings toward Harry are anyway, because he was the one who was with Cedric when Cedric died, so that's all very mixed up and painful. Oh, and she's afraid she's going to be thrown off the Ravenclaw Quidditch team because she's been flying so badly.`,
     });
     createNewMessage({
       from: ron._id,
