@@ -1,6 +1,10 @@
 # multiplatform-chat-from-scratch
 
-A chat app created from scratch, for learning purposes.
+A chat app created from scratch.
+* Server: TypeScript, NodeJS, Express, MongoDB, Mongoose, Socket.IO.
+* Web Client: TypeScript, React, Socket.IO
+
+https://github.com/p-sun/multiplatform-chat-from-scratch/assets/9044578/9a38c6ac-77ce-4003-adb1-4c8e7baee62c
 
 # Environment
 
@@ -24,6 +28,8 @@ http://localhost:8000/
 cd multiplatform-chat-from-scratch
 npm run dev --prefix ./server
 ```
+
+Sockets run on http://localhost:8080/
 
 ## React Web Client
 
