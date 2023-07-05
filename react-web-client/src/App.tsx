@@ -8,15 +8,16 @@ import { Conversation, Message, User } from './models/models';
 
 const chatManager = new ChatManager();
 
+const user: User = {
+  _id: Math.random() > 0.5 ? '649e27b48f89b7524b2cbe56' : '649e27b48f89b7524b2cbe59', // TODO: Switch between users
+};
+
 function useChatManager() {
   const mainConvo: Conversation = {
     _id: `64a5359ace7fe9046dd3393b`, // TODO: retrive conversation ID
-    title: 'Conversation 0',
+    title: 'The Golden Trio',
     createdAt: 0,
     updatedAt: 123,
-  };
-  const user: User = {
-    _id: '649e27b48f89b7524b2cbe56', // TODO: Switch between users
   };
 
   const [convos, setConvos] = useState(
