@@ -11,6 +11,10 @@ export class SocketClient {
 
   onMessage: (msg: Message) => void = () => {};
 
+  getSocketId() {
+    return this.socket.id;
+  }
+
   constructor() {
     this.createClientIO();
   }
@@ -26,8 +30,9 @@ export class SocketClient {
     });
 
     this.socket.on('chat message', (msg, anotherSocketId) => {
-      console.log('GOT chat message', msg, anotherSocketId);
-      this.onMessage(msg as Message);
+      if (anotherSocketId !== this.socket.id) {
+        this.onMessage(msg as Message);
+      }
     });
   }
 }

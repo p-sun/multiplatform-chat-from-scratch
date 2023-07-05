@@ -43,6 +43,10 @@ const conversationSchema = new Schema(
 );
 export const Conversation = model('Conversation', conversationSchema);
 
+export interface StringIdentifiable {
+  _id: string;
+}
+
 export interface IMessage {
   conversation: Types.ObjectId;
   from: Types.ObjectId;

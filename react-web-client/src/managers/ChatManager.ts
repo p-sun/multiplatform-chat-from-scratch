@@ -6,9 +6,11 @@ export class ChatManager {
   private _newMessages: Message[] = []; // Preemtively display new messages before we fetch them from the server
   private _socketClient = new SocketClient();
 
+  onChange: (msgs: Message[]) => void = () => {};
+
   constructor() {
     this._socketClient.onMessage = (msg) => {
-      // this._newMessages.push(msg);
+      this.pushNewServerMessage(msg);
     };
   }
 
@@ -24,20 +26,52 @@ export class ChatManager {
         'Content-Type': 'application/json',
       },
       redirect: 'follow',
-      // body: JSON.stringify(data),
     }).then((res) => res.json());
     this._serverMessages = json.messages as Message[];
     return this._serverMessages;
   }
 
-  public sendMessage(c: { from: User; conversation: Conversation; contents: string }) {
-    const newMsg: Message = {
-      _id: `${Math.random() * 100000}`,
+  public async sendMessage(c: { from: User; conversation: Conversation; contents: string }) {
+    let newMsg: Omit<Message, '_id'> & { fromSocketId: String } = {
       contents: c.contents,
       from: c.from._id,
       conversation: c.conversation._id,
       createdAt: new Date().getTime(),
+      fromSocketId: this._socketClient.getSocketId(),
     };
-    this._newMessages.push(newMsg);
+
+    let tempId = `${Math.random() * 100000}`;
+    this._newMessages.push({ _id: tempId, ...newMsg });
+
+    return new Promise((resolve, reject) => {
+      fetch(`http://localhost:8000/messages`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        redirect: 'follow',
+        body: JSON.stringify(newMsg),
+      })
+        .then((res) => res.json())
+        .then((json) => {
+          console.log('Created new message:', json);
+          this._newMessages = this._newMessages.filter((m) => m._id !== tempId);
+          this.pushNewServerMessage(json.newMessage);
+          resolve({});
+        })
+        .catch((err) => {
+          console.error('Could not create new message:', err, newMsg);
+          this._newMessages = this._newMessages.filter((m) => m._id !== tempId);
+          reject(err);
+        });
+    });
+  }
+
+  private pushNewServerMessage(msg: Message) {
+    if (!this._serverMessages.find((oldM) => oldM._id === msg._id)) {
+      this._serverMessages.push(msg);
+    }
+    this.onChange(this.getMessages());
   }
 }

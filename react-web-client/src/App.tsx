@@ -1,23 +1,24 @@
 import './App.css';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MessagesList } from './components/MessagesList';
 import { ConvoInput } from './components/InputContainer';
 import { ConversationsList } from './components/ConversationsList';
 import { ChatManager } from './managers/ChatManager';
 import { Conversation, Message, User } from './models/models';
 
+const chatManager = new ChatManager();
+
 function useChatManager() {
   const mainConvo: Conversation = {
-    _id: `649e2c53a270e945e0c285d5`,
+    _id: `64a534dda47d5d9e43692482`, // TODO: retrive conversation ID
     title: 'Conversation 0',
     createdAt: 0,
     updatedAt: 123,
   };
   const user: User = {
-    _id: '649e27b48f89b7524b2cbe56',
+    _id: '649e27b48f89b7524b2cbe56', // TODO: Switch between users
   };
 
-  const chatManager = useRef(new ChatManager());
   const [convos, setConvos] = useState(
     Array.from({ length: 10 }, (_, i) => {
       const convo: Conversation =
@@ -34,16 +35,22 @@ function useChatManager() {
   );
   const [msgs, setMessages] = useState([] as Message[]);
   const onSubmit = (contents: string) => {
-    setMessages((prevMsgs) => {
-      chatManager.current.sendMessage({ from: user, contents, conversation: mainConvo });
-      return chatManager.current.getMessages();
+    chatManager.sendMessage({
+      from: user,
+      contents,
+      conversation: mainConvo,
     });
+    setMessages(chatManager.getMessages());
   };
 
   useEffect(() => {
-    chatManager.current.fetchMessages(mainConvo).then((msgs) => {
+    chatManager.fetchMessages(mainConvo).then((msgs) => {
       setMessages(msgs);
     });
+
+    chatManager.onChange = (newMessages) => {
+      setMessages(newMessages);
+    };
   }, []);
 
   return { convos, msgs, user, onSubmit };

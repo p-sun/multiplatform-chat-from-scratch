@@ -1,10 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-import { getMessagesFromConvo } from './src/network/queries';
+import { createNewMessage, getMessagesFromConvo } from './src/network/queries';
 import { connectDB } from './src/network/setupDB';
-import { createServerIO } from './src/network/createServerIO';
+import SocketServer from './src/network/createServerIO';
 import cors from 'cors';
+import { IMessage } from './src/models/schemas';
 
 const PORT = 8000;
 
@@ -16,7 +17,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const io = createServerIO(app);
+const io = new SocketServer(app);
 
 app.get('/', (req, res) => {
   res.send({ hello: 'Express + TypeScript Server' });
@@ -27,12 +28,25 @@ app.get('/messages', (req, res) => {
     typeof req.query.convoId === 'string' ? req.query.convoId : undefined
   )
     .then((messages) => {
-      res.send({ messages });
-      io.emit('message', req.body);
       console.log('GET /messages | success ', messages.length, 'messages');
+      res.send({ messages });
     })
     .catch((error) => {
-      console.log('GET /messages | error', error);
+      console.error('GET /messages | error', error);
+      res.json({ error: error.message });
+    });
+});
+
+app.post('/messages', (req, res) => {
+  console.log('POST /messages | body', req.body);
+  createNewMessage(req.body)
+    .then((message) => {
+      console.log('POST /messages | success ', message);
+      res.send({ newMessage: message });
+      io.emitMessage(message, req.body.fromSocketId);
+    })
+    .catch((error) => {
+      console.error('POST /messages | error', error);
       res.json({ error: error.message });
     });
 });

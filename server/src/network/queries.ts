@@ -6,6 +6,7 @@ import {
   IUser,
   IConversation,
   Conversation,
+  StringIdentifiable,
 } from '../models/schemas';
 
 export async function createNewConvo(convo: IConversation) {
@@ -18,9 +19,17 @@ export async function getMainConvo(title: String) {
   return (await Conversation.findOne().where('title').byTitle(title)).at(0);
 }
 
-export async function createNewMessage(msg: IMessage) {
+export async function createNewMessage(msg: Omit<IMessage, '_id'>) {
   const newMessage = new Message(msg);
   await newMessage.save();
+  let iMsg: IMessage & StringIdentifiable = {
+    _id: newMessage.id,
+    conversation: msg.conversation,
+    from: msg.from,
+    contents: newMessage.contents,
+    createdAt: newMessage.createdAt,
+  };
+  return iMsg;
 }
 
 export async function getMessagesFromConvo(
