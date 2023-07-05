@@ -1,8 +1,9 @@
 # multiplatform-chat-from-scratch
 
-A chat app created from scratch.
-* Server: TypeScript, NodeJS, Express, MongoDB, Mongoose, Socket.IO.
-* Web Client: TypeScript, React, Socket.IO
+A chat app created from scratch, that copies the visuals of FB messenger. WIP.
+
+- Server: TypeScript, NodeJS, Express, MongoDB, Mongoose, Socket.IO, REST APIs.
+- Web Client: TypeScript, React, Socket.IO, REST APIs.
 
 https://github.com/p-sun/multiplatform-chat-from-scratch/assets/9044578/9a38c6ac-77ce-4003-adb1-4c8e7baee62c
 
